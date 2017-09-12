@@ -19,7 +19,7 @@ int inserir(Posicao *vet);
 void listarEstruturas(Posicao *vet);
 void listarOrdenar(Posicao *vet);
 void criarEstrutura(Posicao *vet);
-int remover(Posicao *vet)
+int remover(Posicao *vet);
 int realocar(Posicao *vet);
 
 
@@ -60,7 +60,7 @@ int main(){
                    
                 }else if(sms == 3){
                    
-                   printf("\nO vetor auxiliar nao possui mais espaço para inserir valores\n");
+                   printf("\nA estrutura auxiliar nao possui mais espaco para inserir valores\n");
                       
                 }else if(sms == 4){
                    
@@ -80,7 +80,7 @@ int main(){
                 
             case 3: //Listar os elementos ordenados para cada estrutura auxiliar 
             
-                listarOrdenar(Posicao *vet);
+                listarOrdenar(vet);
                 break;
             
                 
@@ -94,15 +94,15 @@ int main(){
             
                 sms = remover(vet);
 		
-		if(sms = 0){
+		if(sms == 0){
 
 		   printf("\nValor removido com sucesso\n");
 
-		}else if(sms = 1){
+		}else if(sms == 1){
 
 		   printf("\nEssa posicao do vetor nao aponta para uma estrura auxiliar\n");
 
-		}else if(sms = 2){
+		}else if(sms == 2){
 
 		   printf("\nValor não encontrado\n");
 
@@ -116,7 +116,8 @@ int main(){
                 sms = realocar(vet);
                 
                 if(sms == 0){
-                    
+
+                    printf("\nTamanho atual da estrutura %d e %d posicoes\n", pos, atual);
                     printf("\nA sua estrutura foi realocada com sucesso\n");
                          
                 }else if(sms == 1){
@@ -176,20 +177,24 @@ int inserir(Posicao *vet){
     
     int id, elemento;
     int quantPos;
-    
-    printf("\nDigite o indice do vetor em que voce deseja criar uma estrutura auxiliar: ");
-    scanf("%d", &id);
 
-    if(id > 10 || id < 1){
 
-	return 4;
+      printf("\nDigite o indice do vetor em que voce deseja inserir um elemento na estrutura auxiliar: ");
+      scanf("%d", &id);
 
-     }
+      if(id > 10 || id < 1){
 
-    id = id - 1;
+	 return 4;
+
+      }
+
+      id = id - 1;
+
+
     
     if( vet[id].tam == 0){
-        
+	
+        printf("\nEssa posicao ainda nao aponta para uma estrutura\n");
         printf("\nDigite o tamanho total da estrutura auxiliar: ");
         scanf("%d", &quantPos);
         
@@ -202,13 +207,16 @@ int inserir(Posicao *vet){
         
             return 1; 
            
-        }    
+        }  
+  
     }
+
+	
     
     if(vet[id].ponteiro != NULL){
     
         if (vet[id].quant < vet[id].tam){
-            printf("\nDigite elemento a ser inserido na posicao %d: ", vet[id].quant + 1);
+            printf("\nDigite elemento a ser inserido na posicao %d da estrutura auxiliar: ", vet[id].quant + 1);
             scanf("%d", &elemento);
         
             vet[id].ponteiro[vet[id].quant] = elemento;
@@ -376,25 +384,25 @@ int remover(Posicao *vet){
 
 	printf("Digite o indice da posicao do vetor em que voce deseja remover um elemento da estrutura auxiliar: ");
 	scanf("%d", &id);
+	id = id - 1;
+
+	if(vet[id].tam == 0){
+
+	   return 1;
+
+	}
+
 	printf("Digite o valor que voce deseja remover: ");
 	scanf("%d", &valor);
 
-	if(vet[id].tam > 0){
+	for(icont = 0, fim = 0; icont < vet[id].quant && !fim; icont++){
 
-	    for(icont = 0, fim = 0; icont < vet[id].quant && !fim; icont++){
+	    if(vet[id].ponteiro[icont] == valor){
 
-		if(vet[id].ponteiro[icont] == valor){
+		achei = icont;
+	 	fim = 1;
 
-		   achei = icont;
-	 	   fim = 1;
-
-		}
-
-	     }
-
-	}else{
-
-	  return 1;
+	    }
 
 	}
 
@@ -428,26 +436,25 @@ int realocar(Posicao *vet){
 	
 	if(!vet[pos].tam){
 		
-		return 1;
+	    return 1;
 		
 	}else{
 		
-		printf("\nDigite a quantidade que você deseja aumentar: ");
-		scanf("%d", &tamanho);
+	  printf("\nDigite a quantidade que você deseja aumentar: ");
+	  scanf("%d", &tamanho);
 		
-		vet[pos].ponteiro = (int *) realloc(vet[pos].ponteiro, (tamanho + vet[pos].tam) * sizeof(int));
-		atual = tamanho + vet[pos].tam;
+	  vet[pos].ponteiro = (int *) realloc(vet[pos].ponteiro, (tamanho + vet[pos].tam) * sizeof(int));
+	  atual = tamanho + vet[pos].tam;
         
-        if(vet[pos].ponteiro != NULL){
+          if(vet[pos].ponteiro != NULL){
             
-	    printf("\nTamanho atual da estrutura %d e %d posicoes\n", pos, atual);
-            return 0;
+             return 0;
             
-        } else{   
+          }else{   
 		
-        return 2;
+            return 2;
         
-        }
+          }
 		
 	}
 		
