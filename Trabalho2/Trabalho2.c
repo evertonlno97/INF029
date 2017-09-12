@@ -19,6 +19,7 @@ int inserir(Posicao *vet);
 void listarEstruturas(Posicao *vet);
 void listarOrdenar(Posicao *vet);
 void criarEstrutura(Posicao *vet);
+int remover(Posicao *vet)
 int realocar(Posicao *vet);
 
 
@@ -47,23 +48,23 @@ int main(){
                
                 if(sms == 0){
                    
-                   printf("\nOperacao realizada com sucesso\n\n");
+                   printf("\nOperacao realizada com sucesso\n");
                    
                 }else if(sms == 1){
                    
-                  printf("\nTamanho total invalido\n\n");
+                  printf("\nTamanho total invalido\n");
                    
                 }else if(sms == 2){
                   
-                   printf("\nNao foi possivel alocar o espaco indicado\n\n");
+                   printf("\nNao foi possivel alocar o espaco indicado\n");
                    
                 }else if(sms == 3){
                    
-                   printf("\nO vetor auxiliar nao possui mais espaço para inserir valores\n\n");
+                   printf("\nO vetor auxiliar nao possui mais espaço para inserir valores\n");
                       
                 }else if(sms == 4){
                    
-                   printf("\nIndice informado e invalido\n\n");
+                   printf("\nIndice informado e invalido\n");
                       
                 }
                 
@@ -91,7 +92,22 @@ int main(){
                 
             case 5: //Excluir um elemento 
             
-             //TODO
+                sms = remover(vet);
+		
+		if(sms = 0){
+
+		   printf("\nValor removido com sucesso\n");
+
+		}else if(sms = 1){
+
+		   printf("\nEssa posicao do vetor nao aponta para uma estrura auxiliar\n");
+
+		}else if(sms = 2){
+
+		   printf("\nValor não encontrado\n");
+
+		}
+
              
                 break;
                 
@@ -101,15 +117,15 @@ int main(){
                 
                 if(sms == 0){
                     
-                    printf("A sua estrutura foi realocada com sucesso");
+                    printf("\nA sua estrutura foi realocada com sucesso\n");
                          
                 }else if(sms == 1){
                     
-                    printf("Nao existe uma estrutura auxiliar nessa posicao\n");
+                    printf("\nNao existe uma estrutura auxiliar nessa posicao\n");
                     
                 }else if(sms == 2){
                     
-                    printf("Nao foi possivel realocar a estrutura auxiliar\n");
+                    printf("\nNao foi possivel realocar a estrutura auxiliar\n");
                     
                 }   
              
@@ -118,7 +134,7 @@ int main(){
              
             default:
             	
-                printf("Opcao inválida\n");
+                printf("\nOpcao inválida\n");
             
         }
          
@@ -203,11 +219,11 @@ int inserir(Posicao *vet){
 
         }else{
         
-        return 3;
+           return 3;
         
         }
     
-     }else{
+    }else{
        
        return 2;
        
@@ -354,6 +370,54 @@ void criarEstrutura(Posicao *vet){
 
 }
 
+int remover(Posicao *vet){
+
+	int icont, jcont, kcont, fim, achei, id, valor;
+
+	printf("Digite o indice da posicao do vetor em que voce deseja remover um elemento da estrutura auxiliar: ");
+	scanf("%d", &id);
+	printf("Digite o valor que voce deseja remover: ");
+	scanf("%d", &valor);
+
+	if(vet[id].tam > 0){
+
+	    for(icont = 0, fim = 0; icont < vet[id].quant && !fim; icont++){
+
+		if(vet[id].ponteiro[icont] == valor){
+
+		   achei = icont;
+	 	   fim = 1;
+
+		}
+
+	     }
+
+	}else{
+
+	  return 1;
+
+	}
+
+	if(fim){
+
+	  for(jcont = achei, kcont = icont; kcont < vet[id].quant; jcont++, kcont++){
+
+	       vet[id].ponteiro[jcont] = vet[id].ponteiro[kcont];
+
+	  }
+
+ 	  vet[id].quant--;
+
+	  return 0;
+
+	}else{
+
+	  return 2;
+
+	}
+
+
+}
 
 int realocar(Posicao *vet){
 	
