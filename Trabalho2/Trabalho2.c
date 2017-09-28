@@ -48,156 +48,159 @@ int main(){
     	int sms;
     
     	while (!sair){
+
         	op = menu();
-        switch (op){
 
-            	case 0:
+        	switch (op){
+
+            		case 0:
                 	
-			liberarEstrutura(vet);
-                	sair = 1;
-                	printf("\nPrograma Finalizado com sucesso\n\n");
-                	break;
+				liberarEstrutura(vet);
+                		sair = 1;
+                		printf("\nPrograma Finalizado com sucesso\n\n");
+                		break;
             
-            	case 1: //Inserir elemento
+            		case 1: //Inserir elemento
         
-                	sms = inserir(vet);
+                		sms = inserir(vet);
                
-                if(sms == 0){
+                		if(sms == 0){
                    
-                   printf("\nOperacao realizada com sucesso\n");
+                   			printf("\nOperacao realizada com sucesso\n");
                    
-                }else if(sms == 1){
+                		}else if(sms == 1){
                    
-                  printf("\nTamanho total da estrutura auxiliar invalido\n");
+                  			printf("\nTamanho total da estrutura auxiliar invalido\n");
                    
-                }else if(sms == 2){
+                		}else if(sms == 2){
                   
-                   printf("\nNao foi possivel alocar o espaco indicado\n");
+                   			printf("\nNao foi possivel alocar o espaco indicado\n");
                    
-                }else if(sms == 3){
+                		}else if(sms == 3){
                    
-                   printf("\nA estrutura auxiliar nao possui mais espaco para inserir valores\n");
+                   			printf("\nA estrutura auxiliar nao possui mais espaco para inserir valores\n");
                       
-                }else if(sms == 4){
+                		}else if(sms == 4){
                    
-                   printf("\nPosicao informada e invalido\n");
+                   			printf("\nPosicao informada e invalido\n");
                       
-                }
-                
-                
-                break;
+                		}
+                  
+                		break;
             
 
-            case 2: //Listar os numero de todas as estruturas
+            		case 2: //Listar os numero de todas as estruturas
             
-                listarEstruturas(vet);
+                		listarEstruturas(vet);
                 
-                break;
+                		break;
                 
-            case 3: //Listar os elementos ordenados para cada estrutura auxiliar 
+            		case 3: //Listar os elementos ordenados para cada estrutura auxiliar 
             
-                listarOrdenar(vet);
-                break;
+                		listarOrdenar(vet);
+                		break;
             
                 
-            case 4: //Cria uma estrutura com todos os elementos das estruturas auxiliares 
+            		case 4: //Cria uma estrutura com todos os elementos das estruturas auxiliares 
             
-                sms = OrdenarEstrutura(vet);
-		if(sms == 1){
+                		sms = OrdenarEstrutura(vet);
+				if(sms == 1){
 
-			printf("\nAinda não foi alocada nenhuma estrutura auxiliar\n");
+					printf("\nAinda nao foi alocada nenhuma estrutura auxiliar\n");
 
-		}
+				}
 
-                break;
+                		break;
                 
                 
-            case 5: //Excluir um elemento 
+            		case 5: //Excluir um elemento 
             
-                sms = remover(vet);
+                		sms = remover(vet);
 		
-		if(sms == 0){
+				if(sms == 0){
 
-		   printf("\nValor removido com sucesso\n");
+		   			printf("\nValor removido com sucesso\n");
 
-		}else if(sms == 1){
+				}else if(sms == 1){
 
-		   printf("\nEssa posicao do vetor nao aponta para uma estrura auxiliar\n");
+		   			printf("\nEssa posicao do vetor nao aponta para uma estrura auxiliar\n");
 
-		}else if(sms == 2){
+				}else if(sms == 2){
 
-		   printf("\nValor nao encontrado\n");
+		   			printf("\nValor nao encontrado\n");
 
-		}else if(sms == 4){
+				}else if(sms == 4){
                    
-                   printf("\nPosicao informada e invalido\n");
+                   			printf("\nPosicao informada e invalido\n");
                       
-                }
+                		}
            
-                break;
+                		break;
                 
-            case 6: //Aumentar o tamanho de uma estrutura auxiliar 
+            		case 6: //Aumentar o tamanho de uma estrutura auxiliar 
             
-                sms = realocar(vet);
+                		sms = realocar(vet);
                 
-                if(sms == 0){
+                		if(sms == 0){
 
-                    printf("\nA sua estrutura foi realocada com sucesso\n");
+                    			printf("\nA sua estrutura foi realocada com sucesso\n");
                          
-                }else if(sms == 1){
-                    
-                    printf("\nNao existe uma estrutura auxiliar nessa posicao\n");
-                    
-                }else if(sms == 2){
-                    
-                    printf("\nNao foi possivel realocar a estrutura auxiliar\n");
-                    
-                }else if(sms == 4){
+                		}else if(sms == 1){
                    
-                   printf("\nPosicao informada e invalido\n");
+                    			printf("\nNao existe uma estrutura auxiliar nessa posicao\n");
+                    
+                		}else if(sms == 2){
+                    
+                    			printf("\nNao foi possivel realocar a estrutura auxiliar\n");
+                    
+                		}else if(sms == 4){
+                   
+                   			printf("\nPosicao informada e invalido\n");
                       
-                }   
+                		}   
              
-                break;
+                		break;
               
              
-            default:
+		 	default:
             	
-                printf("\nOpcao invalida\n");
+                		printf("\nOpcao invalida\n");
             
-        }
+        	}
          
-    }
+    	}
     
 }
 
 
 int menu(){
-    int op;
-    printf("\n\n----- Menu de Operacoes -----\n\n");
-    printf("0 - Sair\n");
-    printf("1 - Inserir elemento\n");
-    printf("2 - Listar todas as estruturas\n");
-    printf("3 - Ordenar e listar todas as estruturas\n");
-    printf("4 - Listar e ordenar uma estrutura com todos os elementos inseridos\n");
-    printf("5 - Excluir elemento\n");
-    printf("6 - Expandir o tamanho de uma estrutura auxiliar\n");
-    printf("Digite a opcao desejada: ");
-    scanf("%d", &op);
-    return op;
+
+    	int op;
+    	printf("\n\n----- Menu de Operacoes -----\n\n");
+    	printf("0 - Sair\n");
+    	printf("1 - Inserir elemento\n");
+    	printf("2 - Listar todas as estruturas\n");
+    	printf("3 - Ordenar e listar todas as estruturas\n");
+    	printf("4 - Listar e ordenar uma estrutura com todos os elementos inseridos\n");
+    	printf("5 - Excluir elemento\n");
+    	printf("6 - Expandir o tamanho de uma estrutura auxiliar\n");
+    	printf("Digite a opcao desejada: ");
+    	scanf("%d", &op);
+    	return op;
+
 }
 
 void iniciarEstrutura(Posicao *vet){
     
-    int icont;
+    	int icont;
     
-    for(icont = 0; icont < TAM; icont++){
+    	for(icont = 0; icont < TAM; icont++){
      
-        vet[icont].ponteiro = NULL;
-        vet[icont].tam = 0;
-        vet[icont].quant = 0;
+        	vet[icont].ponteiro = NULL;
+        	vet[icont].tam = 0;
+        	vet[icont].quant = 0;
         
-    }    
+    	}    
     
 }
 
@@ -248,7 +251,7 @@ int inserir(Posicao *vet){
 
 void listarEstruturas(Posicao *vet){
    
-  printEstrutura(vet);
+  	printEstrutura(vet);
    
 }
 
@@ -351,7 +354,7 @@ int realocar(Posicao *vet){
 		
 	}else{
 		
-	  	printf("\nDigite o quanto você deseja aumentar: ");
+	  	printf("\nDigite o quanto voce deseja aumentar: ");
 	  	scanf("%d", &tamanho);
 		
 	  	vet[pos].ponteiro = (int *) realloc(vet[pos].ponteiro, (tamanho + vet[pos].tam) * sizeof(int));
@@ -482,7 +485,7 @@ void printEstrutura(Posicao *vet){
 
 	int icont, jcont;
 
-	 for(icont = 0; icont < TAM; icont++){
+	for(icont = 0; icont < TAM; icont++){
       
       		if(!vet[icont].tam){
 
@@ -519,6 +522,7 @@ void copiarEstrutura(Posicao *vetAux, Posicao *vet){
 		}
 
 	}
+
 
 	for(icont = 0; icont < TAM; icont++){
 		if(vetAux[icont].ponteiro != NULL){
@@ -643,7 +647,7 @@ void printEstrTotal(int *totalEstr, int kcont){
 
 	for(icont = 0; icont < kcont; icont++){
 
-	     printf("Posicao[%d] = %d\n", icont + 1, totalEstr[icont]);
+	     	printf("Posicao[%d] = %d\n", icont + 1, totalEstr[icont]);
 
 	}
 }
@@ -657,12 +661,12 @@ int buscaElemento(Posicao *vet, int pos, int *achei){
 
 	for(icont = 0, fim = 0; icont < vet[pos].quant && !fim; icont++){
 
-	    if(vet[pos].ponteiro[icont] == valor){
+	    	if(vet[pos].ponteiro[icont] == valor){
 
-		*achei = icont;
-	 	fim = 1;
+			*achei = icont;
+	 		fim = 1;
 
-	    }
+	    	}
 
 	}
 
@@ -684,11 +688,11 @@ void deletarElemento(Posicao *vet, int pos, int achei, int prox){
 
 	for(jcont = achei, kcont = prox; kcont < vet[pos].quant; jcont++, kcont++){
 
-	       vet[pos].ponteiro[jcont] = vet[pos].ponteiro[kcont];
+	       	vet[pos].ponteiro[jcont] = vet[pos].ponteiro[kcont];
 
 	  }
 
- 	  vet[pos].quant--;
+ 	vet[pos].quant--;
 
 }
 
