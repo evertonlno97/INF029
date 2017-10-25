@@ -36,11 +36,13 @@ void ordenarEstrutura(int *totalEstr, int kcont);
 void printEstrTotal(int *totalEstr, int kcont);
 int buscaElemento(Posicao *vet, int pos, int *achei);
 void deletarElemento(Posicao *vet, int pos, int achei, int prox);
+void inserirArquivo(Posicao *vet);
 
 
 int main(){
     
 	Posicao vet[TAM];
+
     	iniciarEstrutura(vet);
 
     	int op;
@@ -54,7 +56,7 @@ int main(){
         	switch (op){
 
             		case 0:
-                	
+                		inserirArquivo(vet);
 				liberarEstrutura(vet);
                 		sair = 1;
                 		printf("\nPrograma Finalizado com sucesso\n\n");
@@ -696,8 +698,57 @@ void deletarElemento(Posicao *vet, int pos, int achei, int prox){
 
 }
 
+int inserirArquivo(Posicao *vet){
+
+	FILE *arq;
+	int icont, jcont;
+	//char arquivo[] = "arquivo.txt";
+
+	arq = fopen("arquivo.odt", "w");
+
+	if(arq == NULL){
+
+		printf("Erro, nao foi possivel abrir o arquivo\n");
+
+	}
+
+		for(icont = 0; icont < TAM; icont++){
+			if(vet[icont].tam){
+
+				fprintf(arq, "%d\n", icont);
+				fprintf(arq, "%d\n", vet[icont].tam);
+				fprintf(arq, "%d\n", vet[icont].quant);
+
+			}
+			
+			for(jcont = 0; jcont < vet[icont].quant; jcont++){
+
+				fprintf(arq, "%d\n", vet[icont].ponteiro[jcont]);
+
+				if(jcont == vet[icont].quant - 1){
+
+					fprintf(arq, "\n");
+				}
+
+			}
+		}
+
+		fclose(arq);
 
 
+}
+
+
+void importArquivo(Posicao *vet){
+
+	FILE *arq;
+	int icont, jcont;
+	//char arquivo[] = "arquivo.odt";
+
+	arq = fopen("arquivo.odt", "r");
+	
+
+}
 
 
 
