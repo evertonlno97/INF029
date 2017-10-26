@@ -37,6 +37,8 @@ void printEstrTotal(int *totalEstr, int kcont);
 int buscaElemento(Posicao *vet, int pos, int *achei);
 void deletarElemento(Posicao *vet, int pos, int achei, int prox);
 void inserirArquivo(Posicao *vet);
+void alocaImportArq(Posicao *vet, int pos, int tam);
+void importArquivo(Posicao *vet);
 
 
 int main(){
@@ -44,6 +46,7 @@ int main(){
 	Posicao vet[TAM];
 
     	iniciarEstrutura(vet);
+	importArquivo(vet);
 
     	int op;
     	int sair = 0;
@@ -698,7 +701,7 @@ void deletarElemento(Posicao *vet, int pos, int achei, int prox){
 
 }
 
-int inserirArquivo(Posicao *vet){
+void inserirArquivo(Posicao *vet){
 
 	FILE *arq;
 	int icont, jcont;
@@ -710,7 +713,7 @@ int inserirArquivo(Posicao *vet){
 
 		printf("Erro, nao foi possivel abrir o arquivo\n");
 
-	}
+	}else{
 
 		for(icont = 0; icont < TAM; icont++){
 			if(vet[icont].tam){
@@ -729,12 +732,11 @@ int inserirArquivo(Posicao *vet){
 
 					fprintf(arq, "\n");
 				}
-
 			}
 		}
 
 		fclose(arq);
-
+	}
 
 }
 
@@ -742,16 +744,47 @@ int inserirArquivo(Posicao *vet){
 void importArquivo(Posicao *vet){
 
 	FILE *arq;
-	int icont, jcont;
+	int icont, jcont, aux;
 	//char arquivo[] = "arquivo.odt";
 
 	arq = fopen("arquivo.odt", "r");
-	
+
+	if(arq == NULL){
+		
+		printf("Erro, nao foi possivel abrir o arquivo");
+
+	}else{
+
+		for(icont = 0; icont < TAM; icont++){
+			fscanf(arq, "%d", &aux); 
+			if(aux == icont){
+				fscanf(arq, "\n%d\n", &vet[icont].tam);
+				fscanf(arq, "%d\n", &vet[icont].quant);
+
+				alocaImportArq(vet, icont, vet[icont].tam);
+				
+				for(jcont = 0; jcont < vet[icont].quant; jcont++){
+					if(jcont != vet[icont].quant - 1){
+						fscanf(arq, "%d\n", &vet[icont].ponteiro[jcont]);
+					}else{
+						fscanf(arq, "%d\n", &vet[icont].ponteiro[jcont]);
+					}
+
+				}
+			}else{
+				fseek(arq, -1 , SEEK_CUR);
+			}
+		}
+	}
 
 }
 
 
+void alocaImportArq(Posicao *vet, int pos, int tam){
+        
+            	vet[pos].ponteiro = (int *)malloc(tam*sizeof(int));
 
+} 
 
 
 
