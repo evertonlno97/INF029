@@ -11,6 +11,7 @@ struct posicao{
     
 };
 
+
 typedef struct posicao Posicao;
 
 void iniciarEstrutura(Posicao *vet);
@@ -39,6 +40,11 @@ void deletarElemento(Posicao *vet, int pos, int achei, int prox);
 void inserirArquivo(Posicao *vet);
 void alocaImportArq(Posicao *vet, int pos, int tam);
 void importArquivo(Posicao *vet);
+void inserirArquivoBin(Posicao *vet);
+void importArquivoBin(Posicao *vet);
+int menuArquivo();
+int abrirArquivo();
+void limparTela();
 
 
 int main(){
@@ -46,20 +52,75 @@ int main(){
 	Posicao vet[TAM];
 
     	iniciarEstrutura(vet);
-	importArquivo(vet);
-
-    	int op;
+	int op, opArq;
     	int sair = 0;
+
     	int sms;
+
+	do{
+	
+		opArq = abrirArquivo();
+
+		switch(opArq){
+
+			case 1:
+
+				importArquivo(vet);
+				break;
+
+			case 2:
+
+				importArquivoBin(vet);
+				break;
+
+			case 3:
+
+				break;
+
+			default:
+
+				printf("\nOperacao invalida");
+
+		}
+		
+		limparTela();
+
+	}while((opArq != 1) && (opArq != 2) && (opArq != 3));
+
+	//importArquivoBin(vet);
     
     	while (!sair){
 
         	op = menu();
+		//limparTela();
 
         	switch (op){
 
             		case 0:
-                		inserirArquivo(vet);
+				do{
+
+					opArq = menuArquivo();
+
+					switch(opArq){
+
+						case 1:
+
+							inserirArquivo(vet);
+							break;
+
+						case 2:
+
+							inserirArquivoBin(vet);
+							break;
+
+						default:
+
+							printf("\nOperacao invalida");
+
+					}
+
+				}while((opArq != 1) && (opArq != 2));
+			
 				liberarEstrutura(vet);
                 		sair = 1;
                 		printf("\nPrograma Finalizado com sucesso\n\n");
@@ -97,7 +158,6 @@ int main(){
             		case 2: //Listar os numero de todas as estruturas
             
                 		listarEstruturas(vet);
-                
                 		break;
                 
             		case 3: //Listar os elementos ordenados para cada estrutura auxiliar 
@@ -162,7 +222,8 @@ int main(){
                    
                    			printf("\nPosicao informada e invalido\n");
                       
-                		}   
+                		}  
+
              
                 		break;
               
@@ -705,9 +766,9 @@ void inserirArquivo(Posicao *vet){
 
 	FILE *arq;
 	int icont, jcont;
-	//char arquivo[] = "arquivo.txt";
+	char arquivo[] = "arquivo.txt";
 
-	arq = fopen("arquivo.odt", "w");
+	arq = fopen(arquivo, "w");
 
 	if(arq == NULL){
 
@@ -745,9 +806,9 @@ void importArquivo(Posicao *vet){
 
 	FILE *arq;
 	int icont, jcont, aux;
-	//char arquivo[] = "arquivo.odt";
+	char arquivo[] = "arquivo.txt";
 
-	arq = fopen("arquivo.odt", "r");
+	arq = fopen(arquivo, "r");
 
 	if(arq == NULL){
 		
@@ -767,7 +828,7 @@ void importArquivo(Posicao *vet){
 					if(jcont != vet[icont].quant - 1){
 						fscanf(arq, "%d\n", &vet[icont].ponteiro[jcont]);
 					}else{
-						fscanf(arq, "%d\n", &vet[icont].ponteiro[jcont]);
+						fscanf(arq, "%d\n\n", &vet[icont].ponteiro[jcont]);
 					}
 
 				}
@@ -785,6 +846,115 @@ void alocaImportArq(Posicao *vet, int pos, int tam){
             	vet[pos].ponteiro = (int *)malloc(tam*sizeof(int));
 
 } 
+
+int menuArquivo(){
+
+	int op;
+
+	printf("\n\n--- Em que tipo de arquivo voce deseja salvar os seus dados ---");
+	printf("\n1 - Arquivo texto");
+	printf("\n2 - Arquivo Binario");
+	printf("\nDigite o valor correspondente a operacao desejada: ");
+	scanf("%d", &op);
+
+	return op;
+
+}
+
+void inserirArquivoBin(Posicao *vet){
+
+	FILE *arq;
+	int icont, jcont;
+	char arquivo[] = "arquivobin.txt";
+
+	arq = fopen(arquivo, "wb");
+
+	if(arq == NULL){
+
+		printf("Erro, nao foi possivel abrir o arquivo\n");
+
+	}else{
+
+		for(icont = 0; icont < TAM; icont++){
+			if(vet[icont].tam){
+
+				fwrite(&icont, sizeof(int), 1, arq);
+				fwrite(&vet[icont].tam, sizeof(int), 1, arq);
+				fwrite(&vet[icont].quant, sizeof(int), 1, arq);
+
+			}
+			
+			for(jcont = 0; jcont < vet[icont].quant; jcont++){
+
+				fwrite(&vet[icont].ponteiro[jcont], sizeof(int), 1, arq);
+
+				/*if(jcont == vet[icont].quant - 1){
+
+					fprintf(arq, "\n");
+				}*/
+			}
+		}
+
+		fclose(arq);
+	}
+
+}
+
+
+void importArquivoBin(Posicao *vet){
+
+	FILE *arq;
+	int icont, jcont, aux;
+	char arquivo[] = "arquivobin.txt";
+
+	arq = fopen(arquivo, "rb");
+
+	if(arq == NULL){
+		
+		printf("Erro, nao foi possivel abrir o arquivo");
+
+	}else{
+
+		for(icont = 0; icont < TAM; icont++){
+			fread(&aux, sizeof(int), 1, arq);
+			if(aux == icont){
+				fread(&vet[icont].tam, sizeof(int), 1, arq);
+				fread(&vet[icont].quant, sizeof(int), 1, arq);
+
+				alocaImportArq(vet, icont, vet[icont].tam);
+				
+				for(jcont = 0; jcont < vet[icont].quant; jcont++){
+					fread(&vet[icont].ponteiro[jcont], sizeof(int), 1, arq);
+
+				}
+			}else{
+				fseek(arq, -sizeof(int) , SEEK_CUR);
+			}
+		}
+	}
+
+}
+
+int abrirArquivo(){
+
+	int op;
+
+	printf("\n\n--- Em que tipo de arquivo voce salvou os dados do seu programa ---");
+	printf("\n1 - Arquivo texto");
+	printf("\n2 - Arquivo Binario");
+	printf("\n3 - Primeira execucao do programa");
+	printf("\nDigite o valor correspondente a operacao desejada: ");
+	scanf("%d", &op);
+
+	return op;
+
+}
+
+void limparTela(){
+
+	system("clear");
+
+}
 
 
 
